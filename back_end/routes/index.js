@@ -49,14 +49,14 @@ router.post("/categoryAdd", upload, async (req, res) => {
     console.log('@@@@@@@@@@', category);
     if (category) {
       logger.log({
-        message: " category: category name already exists",
+        message: " categoryAdd: category name already exists",
         level: "info",
 
       });
       return res.status(400).send("category name already exists...");
     }
     console.log("REQ>FILE", req.file)
-    const productData = new categoryModel(
+    const categoryData = new categoryModel(
       // _.pick(req.body, [
       //   "category_id",
       //   "product_name",
@@ -66,29 +66,101 @@ router.post("/categoryAdd", upload, async (req, res) => {
       //   "updatedAt",
       // ]) 
       {
-        category_id: req.body.category_id,
-        product_name: req.body.product_name,
-        description: req.body.description,
+
+        categoryName: req.body.categoryName,
+        categoryDescription: req.body.categoryDescription,
         price: req.body.price,
-        images: req.file.path,  //update this
-        createdAt: req.body.createdAt,
-        updatedAt: req.body.updatedAt
+        images: req.file.filename,  //update this
+
       });
-    await productData.save();
+    await categoryData.save();
     res.send(
-      _.pick(productData, [
-        "category_id",
-        "product_name",
-        "description",
+      _.pick(categoryData, [
+        "categoryName",
+        "categoryDescription",
         "price",
         "images",
-        "createdAt",
-        "updatedAt", ,
       ])
     );
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+
+router.delete("/categoryDelete", async (req, res) => {
+  try {
+    let deleteCat = await categoryModel.findByIdAndRemove(req.query.id)
+    if (!deleteCat) {
+      logger.log({
+        message: "categoryDelete: category id does not exists ",
+        level: "info",
+      });
+      return res.status(400).send("categoty id does not exists");
+    } else {
+      res.send({
+        message: "category deleted successfully!",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+})
+
+
+
+router.get("/fetchCategory", async (req, res) => {
+  try {
+    const category = await categoryModel.find();
+    console.log("@@@@@@@@@@@@@@", category);
+    if (!category) {
+      logger.log({
+        message: "categoryFind: category does not exists ",
+        level: "info",
+      });
+      return res.status(400).send("category does not exists");
+    } else {
+      res.status(200).json(category);
+    }
+
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+});
+
+
+router.put("/updateCategory", upload, async (req, res) => {
+  try {
+    if (!req.body) {
+      res.status(400).send({
+        message: "Data to update can not be empty!",
+      });
+    }
+    let id = mongoose.Types.ObjectId(req.query.id);
+    console.log(id);
+    const update = await categoryModel.findByIdAndUpdate(id,
+      {
+        categoryName: req.body.categoryName,
+        categoryDescription: req.body.categoryDescription,
+        price: req.body.price,
+        images: req.file.path
+      })
+
+    if (!update) {
+      logger.log({
+        message: "categoryUpdate: category id does not exists ",
+        level: "info",
+      });
+      return res.status(400).send("category id does not exists");
+    } else {
+      res.send({ message: "category updated successfully." });
+    }
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+});
+
+
+
+
 
 module.exports = router;

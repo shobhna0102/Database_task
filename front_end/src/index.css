@@ -1,0 +1,184 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: muli;
+}
+.navbar {
+  background-color: #fff imo !important;
+}
+.navbar-brand {
+  font-size: 1.9rem !important;
+  color: #565387 !important;
+}
+.navbar a {
+  font-size: 1.3rem;
+  text-transform: capitalize;
+}
+.menu_active {
+  font-weight: bold;
+  border-bottom: 1px solid #565387;
+}
+.navbar a:hover {
+  color: #3498bd !important;
+}
+.brand-name {
+  color: #3498bd !important;
+}
+#header {
+  width: 100%;
+  height: 80vh;
+  margin-top: 70px;
+}
+#header h1 {
+  margin: 0 0 10px 0;
+  font-size: 48px;
+  font-weight: 700;
+  color: black;
+}
+#header .brand-name {
+  color: #3498bd;
+}
+#header h2 {
+  color: #484848;
+  font-size: 24px;
+}
+footer p {
+  padding: 0;
+  margin: 0;
+}
+@media (max-width: 991px) {
+  #header {
+    height: 80vh;
+    text-align: center;
+  }
+  #header .header-img {
+    text-align: center;
+  }
+  #header .header-img img {
+    width: 60%;
+  }
+}
+
+@media (max-width: 768px) {
+  #header {
+    margin-top: 20px;
+  }
+  #header h1 {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+  #header h2 {
+    font-size: 28px;
+  }
+
+  #header .header-img img {
+    width: 70%;
+  }
+}
+
+#header .btn-get-started {
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 10px 30px;
+  border-radius: 50px;
+  transition: 0.5s;
+  color: #3498bd;
+  border: 2px solid #3498bd;
+  text-decoration: none;
+}
+#header .btn-get-started:hover {
+  background: #3498db;
+  color: #fff;
+}
+.header-img {
+  text-align: right;
+}
+#header .animated {
+  animation: up-down 1s ease-in-out infinite alternate-reverse both;
+  border-radius: 50px;
+}
+@-webkit-keyframes up-down {
+  0% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes up-down {
+  0% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;400&display=swap");
+* {
+  font-family: "Josefin Sans", sans-serif;
+}
+.main-heading {
+  color: #5d4037;
+}
+.Item-inside {
+  height: 250px;
+  border-radius: 12px;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+}
+.Item-inside:hover img,
+.Item-inside:hover .btn {
+  transform: scale(1.1);
+}
+.img-div {
+  padding: 0;
+}
+img {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  object-fit: cover;
+  transition: all 0.3s ease-in-out;
+}
+.img-fluid {
+  height: 220px;
+}
+.main-title h1 {
+  font-size: 25px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.price-book-divide h2 {
+  font-size: 20px;
+  font-weight: 400;
+  color: #4db6ac;
+}
+.price-book-divide {
+  margin-bottom: 10px;
+}
+.row {
+  margin-right: 0;
+  margin-left: 0px;
+}
+.btn-primary {
+  padding: 5px;
+  background-color: #4db6ac;
+  outline: none;
+  border: none;
+  transition: all 0.3s ease-in-out;
+}
+.btn-primary:hover {
+  background-color: #00695c;
+  outline: none;
+  border: none;
+}
+.btn-warning:hover {
+  background-color: black;
+  color: whitesmoke;
+  outline: none;
+}
