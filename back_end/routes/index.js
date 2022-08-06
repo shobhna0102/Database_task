@@ -127,6 +127,25 @@ router.get("/fetchCategory", async (req, res) => {
   }
 });
 
+router.get("/fetchCategoryid", async (req, res) => {
+  try {
+    const category = await categoryModel.find(req.query.id);
+    console.log("@@@@@@@@@@@@@@", category);
+    if (!category) {
+      logger.log({
+        message: "categoryFind: category does not exists ",
+        level: "info",
+      });
+      return res.status(400).send("category does not exists");
+    } else {
+      res.status(200).json(category);
+    }
+
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+});
+
 
 router.put("/updateCategory", upload, async (req, res) => {
   try {
@@ -142,7 +161,7 @@ router.put("/updateCategory", upload, async (req, res) => {
         categoryName: req.body.categoryName,
         categoryDescription: req.body.categoryDescription,
         price: req.body.price,
-        images: req.file.path
+        images: req.file.filename
       })
 
     if (!update) {

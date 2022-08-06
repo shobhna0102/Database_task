@@ -1,6 +1,7 @@
 
 
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom"
 
 
 
@@ -76,10 +77,12 @@ function Showcat() {
                                                         </div>
                                                         <p>*Prices may vary on selected date.</p>
 
-                                                        <a href="#">
-                                                            <button className="btn btn-primary" onClick={() => deleteData(_id)}>Delete</button>
-                                                            <button className="btn btn-primary">Edit</button>
-                                                        </a>
+
+                                                        <button className="btn btn-primary" onClick={() => deleteData(_id)}>Delete</button>
+                                                        <Link state={{ elem }} to={`/category`}>
+                                                            <button className="btn btn-primary" onClick={() => (_id)}>Edit</button>
+                                                        </Link>
+
                                                     </div>
                                                 </div>
                                             </div>
