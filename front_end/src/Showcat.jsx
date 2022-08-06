@@ -9,7 +9,7 @@ function Showcat() {
 
     const [showCat, setshow] = useState([]);
 
-    console.log(showCat);
+    // console.log(showCat);
     const fetchData = () => {
         fetch("http://localhost:5000/fetchCategory")
             .then((response) => {
@@ -53,7 +53,7 @@ function Showcat() {
                         {
                             showCat.map((elem) => {
                                 const { _id, categoryName, categoryDescription, price, images, } = elem;
-                                console.log(showCat)
+                                // console.log(showCat)
                                 return (
                                     <>
                                         <div className="item1 col-12 col-md-6 col-lg-6 col-xl-4 my-5" key={_id}>

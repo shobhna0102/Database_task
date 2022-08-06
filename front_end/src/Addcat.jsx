@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 //import { Link } from "react-router-dom"
 import { useLocation } from "react-router-dom";
+// import { ToastContainer, toast } from 'react-toastify';
+//   import 'react-toastify/dist/ReactToastify.css';
+
+//const notify = () => toast.success("Added!");
 
 const Addcat = () => {
+
     const location = useLocation();
     const [categoryName, setName] = useState("");
     const [categoryDescription, setDesctiption] = useState("");
@@ -10,27 +15,45 @@ const Addcat = () => {
     const [selectedFile, setSelectedFile] = useState();
 
     const [showAdd, setShowAdd] = useState(true);
+    const [id, setId] = useState();
 
     const changeHandler = (event) => {
         setSelectedFile(event.target.files[0]);
         //setIsSelected(true);
     };
 
-    const postData = async (e) => {
-        e.preventDefault();
-
-
-        if (selectedFile === null || selectedFile === undefined) {
-            return alert("Please upload an image");
+    useEffect(() => {
+        if (location?.state) {
+            const { elem } = location?.state;
+            setId(elem._id)
+            elem && setShowAdd(false);
+            setName(elem.categoryName);
+            setDesctiption(elem.categoryDescription);
+            setPrice(elem.price);
+            setSelectedFile(elem.images);
+            console.log("data222222222", elem.images)
         }
+        //setShowAdd(false)
+    }, []);
+
+    console.log("ID", id)
+
+
+
+    console.log("@@@@@@@@@@@@@@@", selectedFile);
+    const onEditClick = async () => {
+        // console.log("data", data)
+        console.log("@@@@@@@@@@ id", id)
         const data = new FormData();
         data.append("categoryName", categoryName);
         data.append("categoryDescription", categoryDescription);
         data.append("price", price);
         data.append("images", selectedFile);
 
-        const response = await fetch("http://localhost:5000/categoryAdd", {
-            method: "POST",
+
+        console.log("data", data)
+        const response = await fetch(`http://localhost:5000/updateCategory?id=${id}`, {
+            method: "PUT",
             body: data,
             headers: {
                 "access-control-allow-origin": "*",
@@ -45,72 +68,39 @@ const Addcat = () => {
             alert("error");
         }
 
-        //     const data = new FormData();
-        //     data.append("categoryName", categoryName);
-        //     data.append("categoryDescription", categoryDescription);
-        //     data.append("price", price);
-        //     data.append("images", selectedFile);
-
-        //     const response = await fetch(`http://localhost:5000/updateCategoryid=${id}`, {
-        //         method: "PUT",
-        //         body: data,
-        //         headers: {
-        //             "access-control-allow-origin": "*",
-        //         },
-        //     });
-        //     if (response.ok) {
-        //         console.log("success");
-        //         alert("Added");
-        //         window.location.reload();
-        //     } else {
-        //         console.log(response);
-        //         alert("error");
-        //     }
-        // }
     }
+    const postData = async (e) => {
+        e.preventDefault();
+        console.log("id-----------", e);
 
-    useEffect(() => {
-        if (location?.state) {
-            const { elem } = location?.state;
-            console.log("data", elem);
-            elem && setShowAdd(false);
-            setName(elem.categoryName);
-            setDesctiption(elem.categoryDescription);
-            setPrice(elem.price);
-            setSelectedFile(elem.selectedFile);
+        if (selectedFile === null || selectedFile === undefined) {
+            return alert("Please upload an image");
         }
-
-        // setShowAdd(false)
-    }, []);
-
-    // const updateData = async () => {
-
-    //     const data = new FormData();
-    //     data.append("categoryName", categoryName);
-    //     data.append("categoryDescription", categoryDescription);
-    //     data.append("price", price);
-    //     data.append("images", selectedFile);
-
-    //     const response = await fetch(`http://localhost:5000/updateCategory`, {
-    //         method: "PUT",
-    //         body: data,
-    //         headers: {
-    //             "access-control-allow-origin": "*",
-    //         },
-    //     });
-    //     if (response.ok) {
-    //         console.log("success");
-    //         alert("Added");
-    //         window.location.reload();
-    //     } else {
-    //         console.log(response);
-    //         alert("error");
-    //     }
-    // }
+        const data = new FormData();
+        data.append("categoryName", categoryName);
+        data.append("categoryDescription", categoryDescription);
+        data.append("price", price);
+        data.append("images", selectedFile);
 
 
 
+        const response = await fetch("http://localhost:5000/categoryAdd", {
+            method: "POST",
+            body: data,
+            headers: {
+                "access-control-allow-origin": "*",
+            },
+        });
+        if (response.ok) {
+            console.log("success");
 
+            alert("Added")
+            window.location.reload();
+        } else {
+            console.log(response);
+            alert("error");
+        }
+    }
     return (
         <div className="my-5">
             <h1 className="text-center">Add Category</h1>
@@ -119,7 +109,7 @@ const Addcat = () => {
                     <div className="col-md-6 col-10 mx-auto">
                         <form
                             method="POST"
-                            onSubmit={postData}
+
                             encType="multipart/form-data"
                         >
                             <div className="mb-3">
@@ -169,11 +159,11 @@ const Addcat = () => {
                             </div>
                             <div className="col-12">
                                 {showAdd ? (
-                                    <button className="btn btn-outline-primary" type="submit" >
+                                    <button className="btn btn-outline-primary" type="button" value="submit" onClick={postData} >
                                         AddCategory
                                     </button>
                                 ) : (
-                                    <button className="btn btn-outline-primary" type="submit">
+                                    <button className="btn btn-outline-primary" type="button" value="submit" onClick={onEditClick}>
                                         EditCategory
                                     </button>
                                 )}
